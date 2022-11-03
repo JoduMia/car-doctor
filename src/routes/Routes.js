@@ -13,6 +13,6 @@ export const routes = createBrowserRouter(createRoutesFromElements(
         <Route path="register" element={ <Register />} />
         <Route path="login" element={ <Login />} />
         <Route path="orders" element={ <PrivateRoutes><Order /></PrivateRoutes>} />
-        <Route path="services/:id" element={ <Checkout /> } loader={({params}) => fetch(`http://localhost:5000/services/${params.id}`)}/>
+        <Route path="services/:id" element={ <Checkout /> } loader={({params}) => fetch(`https://car-doctor-server.vercel.app/services/${params.id}`)}/>
     </Route>
 ))

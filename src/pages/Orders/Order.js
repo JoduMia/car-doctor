@@ -7,7 +7,7 @@ const Order = () => {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/orders/?email=${user?.email}`)
+        fetch(`https://car-doctor-server.vercel.app/orders/?email=${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 setOrders(data);
@@ -18,7 +18,7 @@ const Order = () => {
     const orderDelete = (id) => {
         const proceed = window.confirm(`Sure to delete the order?`);
         if(proceed) {
-            fetch(`http://localhost:5000/orders/${id}`, {
+            fetch(`https://car-doctor-server.vercel.app/orders/${id}`, {
                 method: 'DELETE'
             })
             .then(res => res.json())
@@ -36,7 +36,7 @@ const Order = () => {
 
 
     const handleOrderUpdate = (id) => {
-        fetch(`http://localhost:5000/orders/${id}`, {
+        fetch(`https://car-doctor-server.vercel.app/orders/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'
