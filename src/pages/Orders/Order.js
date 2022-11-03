@@ -14,7 +14,47 @@ const Order = () => {
                 console.log(data);
             })
     }, [user?.email])
-    console.log(orders);
+
+    const orderDelete = (id) => {
+        const proceed = window.confirm(`Sure to delete the order?`);
+        if(proceed) {
+            fetch(`http://localhost:5000/orders/${id}`, {
+                method: 'DELETE'
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.deletedCount > 0){
+                    const remaining = orders.filter(odr => odr._id !== id);
+                    setOrders(remaining);
+                }
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
+        }
+    };
+
+
+    const handleOrderUpdate = (id) => {
+        fetch(`http://localhost:5000/orders/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({status: 'Approved'})
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.modifiedCount > 0){
+                const remainingOrder = orders.filter(odr => odr._id !== id);
+                const approvedOrder = orders.find(odr => odr._id === id);
+                approvedOrder.status = 'Approved';
+                const newOrder = [...remainingOrder, approvedOrder];
+                setOrders(newOrder);
+            }
+        })
+    };
 
     return (
         <div>
@@ -23,10 +63,10 @@ const Order = () => {
             <div className="overflow-x-auto w-full">
                 <table className="table w-full">
                     <thead>
-                        <tr>
+                        <tr className='text-center'>
                             <th>
                                 <label>
-                                    <input type="checkbox" className="checkbox" />
+                                    <h1>Delete order</h1>
                                 </label>
                             </th>
                             <th>Name</th>
@@ -36,7 +76,7 @@ const Order = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.map(order => <OrderRow key={order._id} order={order} />)}
+                        {orders.map(order => <OrderRow key={order._id} order={order} orderDelete={orderDelete} handleOrderUpdate={handleOrderUpdate} />)}
                     </tbody>
                 </table>
             </div>

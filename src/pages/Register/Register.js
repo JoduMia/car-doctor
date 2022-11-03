@@ -4,18 +4,27 @@ import loginSvg from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Register = () => {
-    const {createUser} = useContext(AuthContext);
+    const {createUser, updationProfile} = useContext(AuthContext);
     const [form, setForm] = useState({});
 
     const handleSubmit = (e) => {
         e.preventDefault();
-            const {email,password} = form;
+            const {email,password,name} = form;
 
+            //creating user...
             createUser(email,password)
             .then(result => {
                 console.log(result.user);
             })
             .catch(error => {});
+
+            //updating user...
+            const info = {displayName: name, email};
+            updationProfile(info)
+            .then(() => {
+                alert(`updated successfully`);
+            })
+
     };
 
     const handleOnChange = (e) => {

@@ -6,7 +6,14 @@ import { BsSearch } from 'react-icons/bs';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Header = () => {
-    const {user} = useContext(AuthContext)
+    const {user, logOut} = useContext(AuthContext);
+
+    const signOut = () => {
+        logOut().then(() => {
+            alert(`successfully logged out`)
+        })
+    };
+
     return (
         <div className="navbar py-4">
             <div className="flex-1 h-[50px]">
@@ -47,7 +54,7 @@ const Header = () => {
                                     </Link>
                                 </li>
                                 <li><Link to='/'>Settings</Link></li>
-                                <li><Link to='/'>Logout</Link></li>
+                                <li><button onClick={signOut} className='btn btn-sm'>Logout</button></li>
                             </ul>
                         </div>
                     ) : (

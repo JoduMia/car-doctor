@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { FaTrashAlt } from 'react-icons/fa';
 
-const OrderRow = ({order}) => {
+const OrderRow = ({order, orderDelete, handleOrderUpdate}) => {
     const [serviceData, setServiceData] = useState({});
-    const {name, service_name, price, phone, message,service} = order;
+    const {_id,name, service_name, price, phone,service, status} = order;
 
     useEffect(() =>{
         fetch(`http://localhost:5000/services/${service}`)
@@ -12,17 +13,19 @@ const OrderRow = ({order}) => {
         }).catch(err => console.log(err.message))
     },[service])
 
+
+
     return (
             <tr>
                 <th>
                     <label>
-                        <input type="checkbox" className="checkbox" />
+                        <button onClick={() => orderDelete(_id)} className='btn btn-ghost text-red-500 text-xl'><FaTrashAlt /></button>
                     </label>
                 </th>
                 <td>
                     <div className="flex items-center space-x-3">
                         <div className="avatar">
-                            <div className="mask mask-squircle w-24 h-24">
+                            <div className="rounded w-24 h-24">
                                 {serviceData.img &&
                                     <img src={serviceData.img} alt="Avatar Tailwind CSS Component" />
                                 }
@@ -39,7 +42,9 @@ const OrderRow = ({order}) => {
                 </td>
                 <td>{price}</td>
                 <th>
-                    <button className="btn btn-ghost btn-xs">{message}</button>
+                    <button
+                    onClick={() => handleOrderUpdate(_id)}
+                    className="btn btn-ghost btn-xs">{ status? status: 'Pending'}</button>
                 </th>
             </tr>
     )
