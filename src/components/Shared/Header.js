@@ -16,11 +16,12 @@ const Header = () => {
             </div>
             <div className="flex-none text-black hidden md:block">
                 <ul className="menu menu-horizontal p-0">
-                    <li><Link>Home</Link></li>
+                    <li><Link to={'/'}>Home</Link></li>
                     <li tabIndex="0">
-                        <Link> Checkout </Link>
+                        <Link to={'/orders'}>Orders </Link>
                     </li>
-                    <li><Link>About</Link></li>
+                    <li><Link to={'register'}>Register</Link></li>
+                    <li><Link to={'login'}>Login</Link></li>
                 </ul>
             </div>
             <div className="flex-none gap-2">
