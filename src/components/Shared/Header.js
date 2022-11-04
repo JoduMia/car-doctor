@@ -24,9 +24,12 @@ const Header = () => {
             <div className="flex-none text-black hidden md:block">
                 <ul className="menu menu-horizontal p-0">
                     <li><Link to={'/'}>Home</Link></li>
-                    <li tabIndex="0">
+                    {
+                        user &&
+                        <li tabIndex="0">
                         <Link to={'/orders'}>Orders </Link>
-                    </li>
+                        </li>
+                    }
                     <li><Link to={'register'}>Register</Link></li>
                     <li><Link to={'login'}>Login</Link></li>
                 </ul>

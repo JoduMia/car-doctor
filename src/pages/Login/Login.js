@@ -21,7 +21,6 @@ const Login = () => {
             const user = {
                 email: result.user.email
             }
-            // navigate(from, {replace:true})
 
             fetch(`http://localhost:5000/jwt`, {
                 method: 'POST',
@@ -37,6 +36,7 @@ const Login = () => {
             .catch(error => {
                 console.log(error);
             })
+            navigate(from, {replace:true})
             form.reset();
         })
 

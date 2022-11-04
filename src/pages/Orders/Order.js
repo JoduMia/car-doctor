@@ -6,13 +6,22 @@ const Order = () => {
     const { user } = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
 
+    //https://car-doctor-server.vercel.app/
     useEffect(() => {
-        fetch(`https://car-doctor-server.vercel.app/orders/?email=${user?.email}`)
-            .then(res => res.json())
+        fetch(`http://localhost:5000/orders/?email=${user?.email}`, {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('carToken')}`
+            }
+        })
+            .then(res => {
+                console.log(res.status);
+                return res.json()
+            })
             .then(data => {
+                console.log(data);
                 setOrders(data);
                 console.log(data);
-            })
+            }).catch(err => console.log(err))
     }, [user?.email])
 
     const orderDelete = (id) => {
