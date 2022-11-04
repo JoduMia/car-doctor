@@ -18,8 +18,26 @@ const Login = () => {
         //login with email and password---->
         emailPassLogin(email,password)
         .then(result => {
-            console.log(result.user);
-            navigate(from, {replace:true})
+            const user = {
+                email: result.user.email
+            }
+            // navigate(from, {replace:true})
+
+            fetch(`http://localhost:5000/jwt`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+            .then(res => res.json())
+            .then(data => {
+                localStorage.setItem('carToken', data.token)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            form.reset();
         })
 
     };
